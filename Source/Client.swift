@@ -86,6 +86,17 @@ import Foundation
     // NOTE: Not constant only for the sake of mocking during unit tests.
     var session: URLSession
     
+    /// The dispatch queue used to run completion handlers.
+    /// For ease of use (and also backward-compatibility), this defaults to the main queue.
+    ///
+    /// If you plan to perform expensive computation in completion handlers, you may want to override it so that they
+    /// run on another queue.
+    ///
+    /// **Warning:** If you do so, it is your responsibility to properly dispatch to the main queue when updating the
+    /// UI.
+    ///
+    @objc public var completionQueue: dispatch_queue_t = dispatch_get_main_queue()
+    
     /// Create a new Algolia Search client.
     ///
     /// - parameter appID:  The application ID (available in your Algolia Dashboard).
@@ -297,11 +308,12 @@ import Foundation
 
     /// Perform an HTTP Query.
     func performHTTPQuery(path: String, method: HTTPMethod, body: [String: AnyObject]?, hostnames: [String], isSearchQuery: Bool = false, completionHandler: CompletionHandler? = nil) -> NSOperation {
+        let queue = self.completionQueue
         var request: Request!
         request = newRequest(method, path: path, body: body, hostnames: hostnames, isSearchQuery: isSearchQuery) {
             (content: [String: AnyObject]?, error: NSError?) -> Void in
             if completionHandler != nil {
-                dispatch_async(dispatch_get_main_queue()) {
+                dispatch_async(queue) {
                     // WARNING: Because of the asynchronous dispatch, the request could have been cancelled in the meantime.
                     if !request.cancelled {
                         completionHandler!(content: content, error: error)

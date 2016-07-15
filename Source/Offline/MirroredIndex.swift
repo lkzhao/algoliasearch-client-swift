@@ -60,6 +60,13 @@ import Foundation
 /// NOTE: Requires Algolia's SDK. The `OfflineClient.enableOfflineMode()` method must be called with a valid license
 /// key prior to calling any offline-related method.
 ///
+/// ### Synchronization
+///
+/// You may observe sync events by registering for notifications (see `SyncDidStartNotification` and
+/// `SyncDidFinishNotification`).
+///
+/// NOTE: Notifications are posted on the client's completion queue (see `Client.completionQueue`).
+///
 /// ### Request strategy
 ///
 /// When the index is mirrored and the device is online, it becomes possible to transparently switch between online and
@@ -263,7 +270,7 @@ import Foundation
         syncing = true
 
         // Notify observers.
-        dispatch_async(dispatch_get_main_queue()) {
+        dispatch_async(client.completionQueue) {
             NSNotificationCenter.defaultCenter().postNotificationName(MirroredIndex.SyncDidStartNotification, object: self)
         }
 
@@ -395,7 +402,7 @@ import Foundation
         self.syncing = false
         
         // Notify observers.
-        dispatch_async(dispatch_get_main_queue()) {
+        dispatch_async(client.completionQueue) {
             var userInfo: [String: AnyObject]? = nil
             if self.syncError != nil {
                 userInfo = [MirroredIndex.SyncErrorKey: self.syncError!]
@@ -457,6 +464,11 @@ import Foundation
         private var offlineRequest: NSOperation?
         private var mayRunOfflineRequest: Bool = true
         
+        // WARNING: All callbacks must run sequentially; we cannot afford race conditions between them.
+        // Since the queue used by the client for completion handlers may be overridden by the caller and hence be
+        // a concurrent queue, we use a custom queue to ensure proper serialization.
+        private let queue = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL)
+        
         init(index: MirroredIndex, completionHandler: CompletionHandler) {
             assert(index.mirrored)
             self.index = index
@@ -464,9 +476,12 @@ import Foundation
         }
         
         override func start() {
-            // WARNING: All callbacks must run sequentially; we cannot afford race conditions between them.
-            // Since most methods use the main thread for callbacks, we have to use it as well.
-            
+            dispatch_sync(self.queue) {
+                self._start()
+            }
+        }
+        
+        private func _start() {
             // If the strategy is "offline only", well, go offline straight away.
             if index.requestStrategy == .OfflineOnly {
                 startOffline()
@@ -480,7 +495,7 @@ import Foundation
             }
             if index.requestStrategy == .FallbackOnTimeout && mayRunOfflineRequest {
                 // Schedule an offline request to start after a certain delay.
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(index.offlineFallbackTimeout * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(index.offlineFallbackTimeout * Double(NSEC_PER_SEC))), queue) {
                     if self.mayRunOfflineRequest {
                         self.startOffline()
                     }
@@ -495,14 +510,16 @@ import Foundation
             }
             onlineRequest = startOnlineRequest({
                 (content, error) in
-                // In case of transient error, run an offline request.
-                if error != nil && error!.isTransient() && self.mayRunOfflineRequest {
-                    self.startOffline()
-                }
-                // Otherwise, just return the online results.
-                else {
-                    self.cancelOffline()
-                    self.callCompletion(content, error: error)
+                dispatch_sync(self.queue) {
+                    // In case of transient error, run an offline request.
+                    if error != nil && error!.isTransient() && self.mayRunOfflineRequest {
+                        self.startOffline()
+                    }
+                        // Otherwise, just return the online results.
+                    else {
+                        self.cancelOffline()
+                        self.callCompletion(content, error: error)
+                    }
                 }
             })
         }
@@ -516,8 +533,10 @@ import Foundation
             }
             offlineRequest = startOfflineRequest({
                 (content, error) in
-                self.onlineRequest?.cancel()
-                self.callCompletion(content, error: error)
+                dispatch_sync(self.queue) {
+                    self.onlineRequest?.cancel()
+                    self.callCompletion(content, error: error)
+                }
             })
         }
         
@@ -608,11 +627,10 @@ import Foundation
     @objc public func searchOffline(query: Query, completionHandler: CompletionHandler) -> NSOperation {
         assert(self.mirrored, "Mirroring not activated on this index")
         let queryCopy = Query(copy: query)
-        let callingQueue = NSOperationQueue.currentQueue() ?? NSOperationQueue.mainQueue()
         let operation = NSBlockOperation()
         operation.addExecutionBlock() {
             let (content, error) = self._searchOffline(queryCopy)
-            callingQueue.addOperationWithBlock() {
+            dispatch_async(self.client.completionQueue) {
                 if !operation.cancelled {
                     completionHandler(content: content, error: error)
                 }
@@ -712,11 +730,10 @@ import Foundation
         assert(self.mirrored, "Mirroring not activated on this index")
         
         // TODO: We should be doing a copy of the queries for better safety.
-        let callingQueue = NSOperationQueue.currentQueue() ?? NSOperationQueue.mainQueue()
         let operation = NSBlockOperation()
         operation.addExecutionBlock() {
             let (content, error) = self._multipleQueriesOffline(queries, strategy: strategy)
-            callingQueue.addOperationWithBlock() {
+            dispatch_async(self.client.completionQueue) {
                 if !operation.cancelled {
                     completionHandler(content: content, error: error)
                 }
@@ -802,11 +819,10 @@ import Foundation
     @objc public func browseMirror(query: Query, completionHandler: CompletionHandler) -> NSOperation {
         assert(self.mirrored, "Mirroring not activated on this index")
         let queryCopy = Query(copy: query)
-        let callingQueue = NSOperationQueue.currentQueue() ?? NSOperationQueue.mainQueue()
         let operation = NSBlockOperation()
         operation.addExecutionBlock() {
             let (content, error) = self._browseMirror(queryCopy)
-            callingQueue.addOperationWithBlock() {
+            dispatch_async(self.client.completionQueue) {
                 if !operation.cancelled {
                     completionHandler(content: content, error: error)
                 }
@@ -821,12 +837,11 @@ import Foundation
     ///
     @objc public func browseMirrorFrom(cursor: String, completionHandler: CompletionHandler) -> NSOperation {
         assert(self.mirrored, "Mirroring not activated on this index")
-        let callingQueue = NSOperationQueue.currentQueue() ?? NSOperationQueue.mainQueue()
         let operation = NSBlockOperation()
         operation.addExecutionBlock() {
             let query = Query(parameters: ["cursor": cursor])
             let (content, error) = self._browseMirror(query)
-            callingQueue.addOperationWithBlock() {
+            dispatch_async(self.client.completionQueue) {
                 if !operation.cancelled {
                     completionHandler(content: content, error: error)
                 }

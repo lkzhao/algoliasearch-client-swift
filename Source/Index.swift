@@ -255,7 +255,9 @@ import Foundation
             let operation = NSBlockOperation() {
                 completionHandler(content: content, error: nil)
             }
-            NSOperationQueue.mainQueue().addOperation(operation)
+            dispatch_async(client.completionQueue) {
+                operation.start()
+            }
             return operation
         }
         // Otherwise, run an online query.
