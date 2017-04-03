@@ -103,11 +103,11 @@ class QueryTests: XCTestCase {
     
     func testKVO() {
         let query = Query()
-        query.addObserver(self, forKeyPath: "hitsPerPage", options: [.new, .old], context: nil)
-        query.addObserver(self, forKeyPath: "attributesToRetrieve", options: [.new, .old], context: nil)
+        query.addObserver(self, forKeyPath: #keyPath(Query.z_objc_hitsPerPage), options: [.new, .old], context: nil)
+        query.addObserver(self, forKeyPath: #keyPath(Query.attributesToRetrieve), options: [.new, .old], context: nil)
         defer {
-            query.removeObserver(self, forKeyPath: "hitsPerPage")
-            query.removeObserver(self, forKeyPath: "attributesToRetrieve")
+            query.removeObserver(self, forKeyPath: #keyPath(Query.z_objc_hitsPerPage))
+            query.removeObserver(self, forKeyPath: #keyPath(Query.attributesToRetrieve))
         }
         query.hitsPerPage = 666
         query.hitsPerPage = 666 // setting the same value again should not trigger any call
