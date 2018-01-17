@@ -33,6 +33,7 @@ jobs:
           command: fastlane mac test
 
 workflows:
+  version: 2
   build_and_test:
     jobs:
       - build
