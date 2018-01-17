@@ -9,7 +9,7 @@ jobs:
     macos:
       xcode: "9.2.0"
     
-    working_directory: /Users/distiller/output
+    working_directory: /Users/distiller/project
     
     steps:
       - checkout
@@ -23,7 +23,7 @@ jobs:
     macos:
       xcode: "9.2.0"
     
-    working_directory: /Users/distiller/output
+    working_directory: /Users/distiller/project
 
     steps:
       - run:
@@ -34,7 +34,7 @@ jobs:
     macos:
       xcode: "9.2.0"
 
-    working_directory: /Users/distiller/output
+    working_directory: /Users/distiller/project
 
     steps:
       - run:
@@ -45,7 +45,7 @@ jobs:
     macos:
       xcode: "9.2.0"
 
-    working_directory: /Users/distiller/output
+    working_directory: /Users/distiller/project
 
     steps:
       - run:
@@ -56,8 +56,8 @@ jobs:
     macos:
       xcode: "9.2.0"
 
-    working_directory: /Users/distiller/output
-    
+    working_directory: /Users/distiller/project
+
     steps:
       - run:
           name: Build and run watchOS tests
