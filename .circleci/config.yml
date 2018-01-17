@@ -22,20 +22,23 @@ jobs:
           name: Install Pods
           command: pod install
 
-      # Build the app and run tests
+  test_ios:
       - run:
-          name: Build and run tests
-          parallel: true
+          name: Build and run iOS tests
+          command: fastlane ios test
+
+  test_mac:
+      - run:
+          name: Build and run MacOS tests
           command: fastlane mac test
 
-      # Collect XML test results data to show in the UI,
-      # and save the same XML files under test-results folder
-      # in the Artifacts tab
-      - store_test_results:
-          path: test_output/report.xml
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: scan-test-results
-      - store_artifacts:
-          path: ~/Library/Logs/scan
-          destination: scan-logs
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - test_ios:
+          requires:
+            - build
+      - test_mac:
+          requires:
+            - build
