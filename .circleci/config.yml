@@ -60,7 +60,7 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - test_ios:
+      - test_ios
       - test_mac:
           requires:
             - test_ios
