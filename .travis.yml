@@ -13,6 +13,13 @@ install: true
 before_script:
   - gem install xcpretty -N
   - gem update fastlane
-script:
-  - set -o pipefail
-  - fastlane ${FASTLANE_TARGET} test
+
+jobs:
+  include:
+    - stage: test
+        script:
+        - set -o pipefail
+        - fastlane ${FASTLANE_TARGET} test
+    - stage: dummy
+        script: echo "hello"
+
