@@ -3,34 +3,15 @@
 # Check https://circleci.com/docs/2.0/ios-migrating-from-1-2/ for more details
 #
 jobs:
-  build:
-
-    # Specify the Xcode version to use
-    macos:
-      xcode: "9.2.0"
-    shell: /bin/bash --login -eo pipefail
-
-    working_directory: /Users/distiller/project
-    
-    steps:
-      - checkout
-      # Install Pods
-      # - run:
-      #     name: Install Pods
-      #     command: pod install
-      - run:
-          name: Set Ruby Version
-          command:  echo "ruby-2.4" > .ruby-version
-      - run: bundle install
-
+  
   test_ios:
     macos:
       xcode: "9.2.0"
+    shell: /bin/bash --login -eo pipefail
     
-    working_directory: /Users/distiller/project
-
     steps:
       - checkout
+      - run: echo "ruby-2.4" > .ruby-version
       - run: bundle install
       - run:
           name: Build and run iOS tests
@@ -39,11 +20,11 @@ jobs:
   test_mac:
     macos:
       xcode: "9.2.0"
-
-    working_directory: /Users/distiller/project
-
+    shell: /bin/bash --login -eo pipefail
+    
     steps:
       - checkout
+      - run: echo "ruby-2.4" > .ruby-version
       - run: bundle install
       - run:
           name: Build and run MacOS tests
@@ -52,11 +33,11 @@ jobs:
   test_tv:
     macos:
       xcode: "9.2.0"
-
-    working_directory: /Users/distiller/project
-
+    shell: /bin/bash --login -eo pipefail
+    
     steps:
       - checkout
+      - run: echo "ruby-2.4" > .ruby-version
       - run: bundle install
       - run:
           name: Build and run tvOS tests
@@ -65,11 +46,11 @@ jobs:
   test_watch:
     macos:
       xcode: "9.2.0"
-
-    working_directory: /Users/distiller/project
-
+    shell: /bin/bash --login -eo pipefail
+    
     steps:
       - checkout
+      - run: echo "ruby-2.4" > .ruby-version
       - run: bundle install
       - run:
           name: Build and run watchOS tests
@@ -79,16 +60,13 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - build
       - test_ios:
-          requires:
-            - build
       - test_mac:
           requires:
-            - build
+            - test_ios
       - test_watch:
           requires:
-            - build
+            - test_ios
       - test_tv:
           requires:
-            - build
+            - test_ios
