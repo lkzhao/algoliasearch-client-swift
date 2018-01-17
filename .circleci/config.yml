@@ -27,6 +27,7 @@ jobs:
 
     steps:
       - checkout
+      - run: bundle install
       - run:
           name: Build and run iOS tests
           command: bundle exec fastlane ios test
@@ -39,6 +40,7 @@ jobs:
 
     steps:
       - checkout
+      - run: bundle install
       - run:
           name: Build and run MacOS tests
           command: bundle exec fastlane mac test
@@ -51,6 +53,7 @@ jobs:
 
     steps:
       - checkout
+      - run: bundle install
       - run:
           name: Build and run tvOS tests
           command: bundle exec fastlane tv test
@@ -63,6 +66,7 @@ jobs:
 
     steps:
       - checkout
+      - run: bundle install
       - run:
           name: Build and run watchOS tests
           command: bundle exec fastlane watch test
