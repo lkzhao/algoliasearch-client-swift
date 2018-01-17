@@ -17,9 +17,9 @@ before_script:
 jobs:
   include:
     - stage: test
-        script:
+      script:
         - set -o pipefail
         - fastlane ${FASTLANE_TARGET} test
     - stage: dummy
-        script: echo "hello"
+      script: echo "hello"
 
