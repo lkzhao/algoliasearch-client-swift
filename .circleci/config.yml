@@ -18,11 +18,21 @@ jobs:
           command: pod install
 
   test_ios:
+
+    macos:
+      xcode: "9.2.0"
+
+    steps:
       - run:
           name: Build and run iOS tests
           command: fastlane ios test
 
   test_mac:
+
+    macos:
+      xcode: "9.2.0"
+
+    steps:
       - run:
           name: Build and run MacOS tests
           command: fastlane mac test
