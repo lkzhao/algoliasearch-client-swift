@@ -18,10 +18,6 @@ jobs:
       #     name: Install Pods
       #     command: pod install
       - run: ruby -v
-      - run:
-          name: Set Ruby Version
-          command:  echo "ruby-2.4" > .ruby-version
-      - run: ruby -v
       - run: bundle install
 
   test_ios:
