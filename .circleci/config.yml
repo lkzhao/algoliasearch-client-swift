@@ -26,6 +26,7 @@ jobs:
     working_directory: /Users/distiller/project
 
     steps:
+      - checkout
       - run:
           name: Build and run iOS tests
           command: bundle exec fastlane ios test
@@ -37,6 +38,7 @@ jobs:
     working_directory: /Users/distiller/project
 
     steps:
+      - checkout
       - run:
           name: Build and run MacOS tests
           command: bundle exec fastlane mac test
@@ -48,6 +50,7 @@ jobs:
     working_directory: /Users/distiller/project
 
     steps:
+      - checkout
       - run:
           name: Build and run tvOS tests
           command: bundle exec fastlane tv test
@@ -59,6 +62,7 @@ jobs:
     working_directory: /Users/distiller/project
 
     steps:
+      - checkout
       - run:
           name: Build and run watchOS tests
           command: bundle exec fastlane watch test
