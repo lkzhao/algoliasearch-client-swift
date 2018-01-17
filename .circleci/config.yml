@@ -35,6 +35,24 @@ jobs:
           name: Build and run MacOS tests
           command: fastlane mac test
 
+  test_tv:
+    macos:
+      xcode: "9.2.0"
+
+    steps:
+      - run:
+          name: Build and run tvOS tests
+          command: fastlane tv test
+
+  test_watch:
+    macos:
+      xcode: "9.2.0"
+
+    steps:
+      - run:
+          name: Build and run watchOS tests
+          command: fastlane watch test
+
 workflows:
   version: 2
   build_and_test:
@@ -44,5 +62,11 @@ workflows:
           requires:
             - build
       - test_mac:
+          requires:
+            - build
+      - test_watch:
+          requires:
+            - build
+      - test_tv:
           requires:
             - build
