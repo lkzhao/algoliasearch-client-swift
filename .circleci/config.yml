@@ -11,11 +11,11 @@ jobs:
 
     steps:
       - checkout
-
       # Install Pods
-      - run:
-          name: Install Pods
-          command: pod install
+      # - run:
+      #     name: Install Pods
+      #     command: pod install
+      - run: bundle install
 
   test_ios:
     macos:
@@ -24,7 +24,7 @@ jobs:
     steps:
       - run:
           name: Build and run iOS tests
-          command: fastlane ios test
+          command: bundle exec fastlane ios test
 
   test_mac:
     macos:
@@ -33,7 +33,7 @@ jobs:
     steps:
       - run:
           name: Build and run MacOS tests
-          command: fastlane mac test
+          command: bundle exec fastlane mac test
 
   test_tv:
     macos:
@@ -42,7 +42,7 @@ jobs:
     steps:
       - run:
           name: Build and run tvOS tests
-          command: fastlane tv test
+          command: bundle exec fastlane tv test
 
   test_watch:
     macos:
@@ -51,7 +51,7 @@ jobs:
     steps:
       - run:
           name: Build and run watchOS tests
-          command: fastlane watch test
+          command: bundle exec fastlane watch test
 
 workflows:
   version: 2
