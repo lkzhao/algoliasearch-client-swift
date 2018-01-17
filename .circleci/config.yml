@@ -9,7 +9,7 @@ jobs:
     macos:
       xcode: "9.2.0"
     
-    working_directory: /Users/algolia/output
+    working_directory: /Users/distiller/output
     
     steps:
       - checkout
@@ -23,7 +23,7 @@ jobs:
     macos:
       xcode: "9.2.0"
     
-    working_directory: /Users/algolia/output
+    working_directory: /Users/distiller/output
 
     steps:
       - run:
@@ -34,7 +34,7 @@ jobs:
     macos:
       xcode: "9.2.0"
 
-    working_directory: /Users/algolia/output
+    working_directory: /Users/distiller/output
 
     steps:
       - run:
@@ -45,7 +45,7 @@ jobs:
     macos:
       xcode: "9.2.0"
 
-    working_directory: /Users/algolia/output
+    working_directory: /Users/distiller/output
 
     steps:
       - run:
@@ -56,7 +56,7 @@ jobs:
     macos:
       xcode: "9.2.0"
 
-    working_directory: /Users/algolia/output
+    working_directory: /Users/distiller/output
     
     steps:
       - run:
