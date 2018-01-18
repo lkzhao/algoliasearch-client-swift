@@ -1,3 +1,4 @@
+group: travis_latest
 branches:
   only:
     - master
