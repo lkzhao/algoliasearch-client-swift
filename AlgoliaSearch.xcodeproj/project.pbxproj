@@ -37,6 +37,11 @@
 		5DB2515E1AAD9F3F00945339 /* ClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FFA371AAB08830078869E /* ClientTests.swift */; };
 		5DECA2DA1A960BC5001A6088 /* Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DECA2D91A960BC5001A6088 /* Index.swift */; };
 		6B364CD21EC180AF4A752092 /* Pods_AlgoliaSearch_Offline_iOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AA9A9207EC4D018D67FCA0 /* Pods_AlgoliaSearch_Offline_iOS_Tests.framework */; };
+		B1371CBA215D531400475D1B /* Index+Luke.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1371CB9215D531400475D1B /* Index+Luke.swift */; };
+		B1371CBB215D531400475D1B /* Index+Luke.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1371CB9215D531400475D1B /* Index+Luke.swift */; };
+		B1371CBC215D531400475D1B /* Index+Luke.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1371CB9215D531400475D1B /* Index+Luke.swift */; };
+		B1371CBD215D531400475D1B /* Index+Luke.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1371CB9215D531400475D1B /* Index+Luke.swift */; };
+		B1371CBE215D531400475D1B /* Index+Luke.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1371CB9215D531400475D1B /* Index+Luke.swift */; };
 		BC01E66D1CA43CEE0067670B /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC01E66C1CA43CEE0067670B /* Request.swift */; };
 		BC01E66E1CA43CEE0067670B /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC01E66C1CA43CEE0067670B /* Request.swift */; };
 		BC09F7771CAE743900ABB395 /* BrowseIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC09F7761CAE743900ABB395 /* BrowseIterator.swift */; };
@@ -236,6 +241,7 @@
 		73F0D0837C9D6195F00B03B7 /* Pods-AlgoliaSearch-Offline-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearch-Offline-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearch-Offline-iOS/Pods-AlgoliaSearch-Offline-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		88AA9A9207EC4D018D67FCA0 /* Pods_AlgoliaSearch_Offline_iOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearch_Offline_iOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB63831D5434F98EB5F2AFF2 /* Pods-AlgoliaSearch-Offline-iOS-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearch-Offline-iOS-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearch-Offline-iOS-Tests/Pods-AlgoliaSearch-Offline-iOS-Tests.release.xcconfig"; sourceTree = "<group>"; };
+		B1371CB9215D531400475D1B /* Index+Luke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Index+Luke.swift"; sourceTree = "<group>"; };
 		BC01E66C1CA43CEE0067670B /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		BC09F7761CAE743900ABB395 /* BrowseIterator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseIterator.swift; sourceTree = "<group>"; };
 		BC09F7791CAE7FDF00ABB395 /* BrowseIteratorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseIteratorTests.swift; sourceTree = "<group>"; };
@@ -517,6 +523,7 @@
 				BC0A01591C9BEDB200CD4A7C /* Error.swift */,
 				5D74959F1A8E277400B0263F /* Helpers.swift */,
 				5DECA2D91A960BC5001A6088 /* Index.swift */,
+				B1371CB9215D531400475D1B /* Index+Luke.swift */,
 				BC68BC561CB69776007F9655 /* IndexQuery.swift */,
 				5D09E1DB1AC0773A00B799A6 /* Network.swift */,
 				BC15FAC01E01C041005E3B56 /* NetworkReachability.swift */,
@@ -1095,6 +1102,7 @@
 				BC4DDF021DD11697004D9A6E /* AbstractQuery.swift in Sources */,
 				BC28C4D71E5B5A0E00EFC4A0 /* Searchable.swift in Sources */,
 				BC4DDEF01DD10E8B004D9A6E /* AbstractClient.swift in Sources */,
+				B1371CBA215D531400475D1B /* Index+Luke.swift in Sources */,
 				5D09E1DC1AC0773A00B799A6 /* Network.swift in Sources */,
 				5D7495A21A8E277400B0263F /* Client.swift in Sources */,
 				5D7495A71A8E499B00B0263F /* Query.swift in Sources */,
@@ -1144,6 +1152,7 @@
 				BC4DDF031DD11697004D9A6E /* AbstractQuery.swift in Sources */,
 				BC28C4D81E5B5A0E00EFC4A0 /* Searchable.swift in Sources */,
 				BC4DDEF11DD10E8B004D9A6E /* AbstractClient.swift in Sources */,
+				B1371CBB215D531400475D1B /* Index+Luke.swift in Sources */,
 				5DB251591AAD9F2A00945339 /* Query.swift in Sources */,
 				5D09E1DD1AC0773A00B799A6 /* Network.swift in Sources */,
 				5DB251581AAD9F2700945339 /* Client.swift in Sources */,
@@ -1193,6 +1202,7 @@
 				BC4DDF061DD11697004D9A6E /* AbstractQuery.swift in Sources */,
 				BC28C4DB1E5B5A0E00EFC4A0 /* Searchable.swift in Sources */,
 				BC4DDEF41DD10E8B004D9A6E /* AbstractClient.swift in Sources */,
+				B1371CBE215D531400475D1B /* Index+Luke.swift in Sources */,
 				BC23A6F41D63541500DF9034 /* AsyncOperation.swift in Sources */,
 				BC23A6F81D63541500DF9034 /* Helpers.swift in Sources */,
 				BC23A6FD1D63541500DF9034 /* Request.swift in Sources */,
@@ -1219,6 +1229,7 @@
 				BC4BD2871D54E48900170ECC /* Query.swift in Sources */,
 				BC4BD2881D54E48900170ECC /* Network.swift in Sources */,
 				BC4DDF051DD11697004D9A6E /* AbstractQuery.swift in Sources */,
+				B1371CBD215D531400475D1B /* Index+Luke.swift in Sources */,
 				BCD57D271D89970D00C5DE68 /* OfflineIndex.swift in Sources */,
 				BC28C4DA1E5B5A0E00EFC4A0 /* Searchable.swift in Sources */,
 				BCD57D221D89947500C5DE68 /* DisjunctiveFaceting.swift in Sources */,
@@ -1252,6 +1263,7 @@
 				BC4DDF041DD11697004D9A6E /* AbstractQuery.swift in Sources */,
 				BC28C4D91E5B5A0E00EFC4A0 /* Searchable.swift in Sources */,
 				BC4DDEF21DD10E8B004D9A6E /* AbstractClient.swift in Sources */,
+				B1371CBC215D531400475D1B /* Index+Luke.swift in Sources */,
 				BCD1F5661CC61D100006E227 /* Index.swift in Sources */,
 				BCD1F5611CC61CFE0006E227 /* AsyncOperation.swift in Sources */,
 				BCD1F5651CC61D0D0006E227 /* Helpers.swift in Sources */,
